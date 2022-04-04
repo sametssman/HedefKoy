@@ -37,35 +37,36 @@ class HedefAdapter(val hedefArrayList: ArrayList<Hedef>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: HedefHolder, position: Int) {
         holder.view.recyclerViewRowText.text = hedefArrayList[position].baslik
         if (hedefArrayList[position].hafta == null){
-            val finisTime = (hedefArrayList[position].dakika.toString().toInt() * 60 * 1000 * 1000 * 1000L) + (hedefArrayList[position].saat.toString().toInt() * 60 * 60 * 1000 * 1000 * 1000L)
+            val finisTime = (hedefArrayList[position].dakika.toString().toInt() * 60 * 1000L) + (hedefArrayList[position].saat.toString().toInt() * 60 * 60 * 1000L)
             holder.view.girilenSureTextView.text = "${hedefArrayList[position].saat} Saat ${hedefArrayList[position].dakika} Dakika"
-            if(System.nanoTime() >= hedefArrayList[position].Time!! + finisTime){
+            if(System.currentTimeMillis() >= hedefArrayList[position].Time!! + finisTime){
                 holder.view.recyclerViewRowText.setTextColor(Color.parseColor("#4D423636"))
                 holder.view.girilenSureTextView.setTextColor(Color.parseColor("#4D423636"))
                 holder.view.kalanSureTextView.visibility = View.INVISIBLE
                 holder.view.tamamlandiTextView.visibility = View.VISIBLE
             }else{
                 val kalandakika =
-                    (hedefArrayList[position].Time!! + finisTime - System.nanoTime()) /60000000000L % 60
+                    ((hedefArrayList[position].Time!! + finisTime - System.currentTimeMillis()) /60000 )% 60
                 val kalansaat =
-                    (hedefArrayList[position].Time!! + finisTime - System.nanoTime()) /60000000000L / 60
+                    (hedefArrayList[position].Time!! + finisTime - System.currentTimeMillis()) /60000 / 60
 
                 holder.view.kalanSureTextView.text = "${kalansaat} Saat ${kalandakika} Dakika"
             }
         }else if (hedefArrayList[position].saat == null){
-            val finisTime = (hedefArrayList[position].hafta.toString().toInt() * 7 * 24 * 60 * 60 * 1000 * 1000 * 1000L) + (hedefArrayList[position].gun.toString().toInt() * 24 * 60 * 60 * 60 * 1000 * 1000 * 1000L)
+            val finisTime = (hedefArrayList[position].hafta.toString().toInt() * 7 * 24 * 60 * 60 * 1000L) + (hedefArrayList[position].gun.toString().toInt() * 24 * 60 * 60 * 1000L)
             holder.view.girilenSureTextView.text = "${hedefArrayList[position].hafta} Hafta ${hedefArrayList[position].gun} Gün"
-            if(System.nanoTime() >= hedefArrayList[position].Time!! + finisTime){
+            if(System.currentTimeMillis() >= hedefArrayList[position].Time!! + finisTime){
                 holder.view.recyclerViewRowText.setTextColor(Color.parseColor("#4D423636"))
                 holder.view.girilenSureTextView.setTextColor(Color.parseColor("#4D423636"))
                 holder.view.kalanSureTextView.visibility = View.INVISIBLE
                 holder.view.tamamlandiTextView.visibility = View.VISIBLE
             }else{
                 val kalanhafta =
-                    ((hedefArrayList[position].Time!! + finisTime - System.nanoTime()) /60000000000L / 60 / 24) / 7
+                    (hedefArrayList[position].Time!! + finisTime - System.currentTimeMillis()) /86400000 / 7
                 val kalangun =
-                    ((hedefArrayList[position].Time!! + finisTime - System.nanoTime()) /60000000000L / 60 / 24) % 7
+                    ((hedefArrayList[position].Time!! + finisTime - System.currentTimeMillis()) /86400000) % 7
 
+                holder.view.tamamlandiTextView.visibility = View.GONE
                 holder.view.kalanSureTextView.text = "${kalanhafta} Hafta ${kalangun} Gün"
             }
         }

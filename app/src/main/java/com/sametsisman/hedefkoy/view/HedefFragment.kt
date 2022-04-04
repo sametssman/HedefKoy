@@ -73,7 +73,7 @@ class HedefFragment() : Fragment() {
 
         val baslik = textFieldBaslikEditText.text.toString()
         val hedef = textFieldHedefEditText.text.toString()
-        val time = System.nanoTime()
+        val time = System.currentTimeMillis()
 
         if(weekOrHourText.text.toString() == "Hafta"){
 
