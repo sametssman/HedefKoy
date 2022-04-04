@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/recyclerviewFragment">
+
+    <fragment
+        android:id="@+id/recyclerviewFragment"
+        android:name="com.sametsisman.hedefkoy.view.RecyclerviewFragment"
+        android:label="fragment_recyclerview"
+        tools:layout="@layout/fragment_recyclerview" >
+        <action
+            android:id="@+id/action_recyclerviewFragment_to_hedefFragment"
+            app:destination="@id/hedefFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/hedefFragment"
+        android:name="com.sametsisman.hedefkoy.view.HedefFragment"
+        android:label="fragment_hedef"
+        tools:layout="@layout/fragment_hedef" >
+        <action
+            android:id="@+id/action_hedefFragment_to_recyclerviewFragment"
+            app:destination="@id/recyclerviewFragment" />
+    </fragment>
+</navigation>
